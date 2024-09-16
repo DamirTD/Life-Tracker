@@ -1,15 +1,13 @@
 services:
     app:
         build:
-            context: ./finance
+            context: .
             dockerfile: Dockerfile
-        container_name: laravel_app
+        container_name: GraduateProject
         volumes:
-            - ./finance:/var/www/html
+            - .:/var/www/html
         ports:
             - "8080:80"
-        depends_on:
-            - db
         environment:
             - DB_CONNECTION=${DB_CONNECTION}
             - DB_HOST=${DB_HOST}

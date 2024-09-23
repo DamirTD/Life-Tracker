@@ -87,4 +87,4 @@ jobs:
         run: php artisan migrate --env=testing
 
       - name: Run Tests
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit --configuration phpunit.xml

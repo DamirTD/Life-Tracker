@@ -75,3 +75,6 @@ jobs:
             fi
             sleep 2
           done
+
+      - name: Run Tests
+        run: vendor/bin/phpunit

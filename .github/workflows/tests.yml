@@ -34,6 +34,14 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
           coverage: none
 
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
@@ -42,6 +50,11 @@ jobs:
 
       - name: Generate app key
         run: php artisan key:generate
+
+      - name: Set up database (если требуется)
+        run: |
+          cp .env.example .env
+          php artisan migrate --env=testing
 
       - name: Execute tests
         run: vendor/bin/phpunit

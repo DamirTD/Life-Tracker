@@ -65,6 +65,13 @@ jobs:
       - name: Generate app key
         run: php artisan key:generate
 
+      - name: Set up environment for testing
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_DATABASE=graduate_work" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
       - name: Wait for MySQL to be ready
         run: |
           for i in {1..30}; do
@@ -75,6 +82,9 @@ jobs:
               fi
               sleep 2
           done
+
+      - name: Run migrations
+        run: php artisan migrate --env=testing
 
       - name: Run Tests
         run: vendor/bin/phpunit

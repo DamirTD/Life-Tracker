@@ -69,7 +69,7 @@ jobs:
         run: |
           for i in {1..30}; do
             echo "Waiting for MySQL to be ready... ($i/30)"
-            if mysqladmin ping -h127.0.0.1 -uroot --silent; then
+            if mysqladmin ping -hmysql -uroot --silent; then
               echo "MySQL is ready!"
               break
             fi

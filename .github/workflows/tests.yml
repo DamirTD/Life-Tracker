@@ -69,12 +69,9 @@ jobs:
         run: |
           for i in {1..30}; do
             echo "Waiting for MySQL to be ready... ($i/30)"
-            if mysqladmin ping -hmysql -uroot -proot --silent; then
+            if mysqladmin ping -hmysql --silent; then
               echo "MySQL is ready!"
               break
             fi
             sleep 2
           done
-
-      - name: Set up database
-        run: php artisan migrate --env=testing

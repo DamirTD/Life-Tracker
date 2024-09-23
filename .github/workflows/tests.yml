@@ -68,5 +68,13 @@ jobs:
       - name: Wait for MySQL to be ready
         run: |
           for i in {1..30}; do
-            echo "Waiting for MySQL to be ready..."
-            if mysqladmin ping -h127.0.0.1 -uroot
+            echo "Waiting for MySQL to be ready... ($i/30)"
+            if mysqladmin ping -h127.0.0.1 -uroot --silent; then
+              echo "MySQL is ready!"
+              break
+            fi
+            sleep 2
+          done
+
+      - name: Set up database
+        run: php artisan migrate --env=testing

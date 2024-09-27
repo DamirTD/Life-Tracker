@@ -20,13 +20,11 @@ class TransactionService implements TransactionServiceInterface
 
     public function getAmount(string $line): ?string
     {
-        // Находим сумму в строке с учетом возможных пробелов и запятой
         if (preg_match('/\d[\d\s]*[,\s]*\d{2}/', $line, $matches)) {
-            // Убираем пробелы и заменяем запятую на точку
             $amount = str_replace([' ', ','], ['', '.'], $matches[0]);
-            return number_format((float)$amount, 2, '.', ''); // Форматируем результат
+            return number_format((float)$amount, 2, '.', '');
         }
-        return null; // Если сумма не найдена
+        return null;
     }
 
 
@@ -41,7 +39,7 @@ class TransactionService implements TransactionServiceInterface
 
     public function createTransaction(?string $date, ?string $operation, ?string $amount, string $details): ?TransactionDTO
     {
-        if (!$operation || !$amount) {
+        if(!isset($operation) || !isset($amount)){
             return null;
         }
 

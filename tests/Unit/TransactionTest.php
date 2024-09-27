@@ -42,11 +42,10 @@ class TransactionTest extends TestCase
         $this->assertNull($this->transactionService->getAmount($line));
     }
 
-    // Тесты для extractDetails()
     public function testExtractDetailsReturnsCorrectDetails()
     {
         $line = "Перевод 1000 ₸ на карту 1234";
-        $expectedDetails = "1000 ₸ на карту 1234"; // Ожидаемое значение
+        $expectedDetails = "1000 ₸ на карту 1234";
         $this->assertEquals($expectedDetails, $this->transactionService->extractDetails($line));
     }
 
@@ -56,13 +55,12 @@ class TransactionTest extends TestCase
         $this->assertEquals('', $this->transactionService->extractDetails($line));
     }
 
-    // Тесты для createTransaction()
     public function testCreateTransactionReturnsTransactionDTO()
     {
-        $date = '2024-09-26';
+        $date      = '2024-09-26';
         $operation = 'Перевод';
-        $amount = '1000.00';
-        $details = 'Оплата услуги';
+        $amount    = '1000.00';
+        $details   = 'Оплата услуги';
 
         $transactionDTO = $this->transactionService->createTransaction($date, $operation, $amount, $details);
 

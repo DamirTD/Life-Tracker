@@ -14,5 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::post('/import-pdf', [TransactionController::class, 'importPdf']);

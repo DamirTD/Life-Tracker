@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\ServiceInterfaces\TransactionServiceInterface;
 use App\Http\Utils\Constants\TransactionConstants;
+use App\Http\Utils\Sort\TransactionSorter;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class TransactionController extends Controller
 {
     public function __construct(
         protected TransactionServiceInterface $transactionService
-    ){
+    ) {
     }
 
     /**
@@ -30,7 +31,6 @@ class TransactionController extends Controller
 
         foreach ($lines as $line) {
             if (preg_match(TransactionConstants::DATE_PATTERN, $line, $dateMatches)) {
-
                 $date        = $dateMatches[0];
                 $operation   = $this->transactionService->getOperation($line);
                 $amount      = $this->transactionService->getAmount($line);
@@ -42,6 +42,13 @@ class TransactionController extends Controller
                 }
             }
         }
+
+        $transactions = $this->transactionService->sort(
+            $transactions,
+            $request->query('sortBy'),
+            $request->query('sortOrder', 'desc')
+        );
+
         return response()->json($transactions);
     }
 }

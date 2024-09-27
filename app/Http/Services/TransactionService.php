@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Http\ServiceInterfaces\TransactionServiceInterface;
 use App\Http\Utils\Enums\OperationType;
 use App\Http\Utils\DTO\TransactionDTO;
+use App\Http\Utils\Sort\TransactionSorter;
 
 class TransactionService implements TransactionServiceInterface
 {
@@ -44,5 +45,13 @@ class TransactionService implements TransactionServiceInterface
         }
 
         return new TransactionDTO($date, $operation, $amount, $details);
+    }
+
+    public function sort(array $transactions, ?string $sortBy, string $sortOrder = 'desc'): array
+    {
+        if ($sortBy) {
+            return TransactionSorter::sort($transactions, $sortBy, $sortOrder);
+        }
+        return $transactions;
     }
 }

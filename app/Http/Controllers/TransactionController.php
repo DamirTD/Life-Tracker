@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\ServiceInterfaces\TransactionServiceInterface;
 use App\Http\Utils\Constants\TransactionConstants;
-use App\Http\Utils\Sort\TransactionSorter;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,31 +23,19 @@ class TransactionController extends Controller
     {
         $file      = $request->file('file');
         $pdfParser = new Parser();
-        $pdf       = $pdfParser->parseFile($file->getPathname());
-        $lines     = explode("\n", $pdf->getText());
+        $pdfText   = $pdfParser->parseFile($file->getPathname())->getText();
 
-        $transactions = [];
+        $transactions = array_filter(array_map(
+            fn($line) => $this->transactionService->processLine($line),
+            explode("\n", $pdfText)
+        ));
 
-        foreach ($lines as $line) {
-            if (preg_match(TransactionConstants::DATE_PATTERN, $line, $dateMatches)) {
-                $date        = $dateMatches[0];
-                $operation   = $this->transactionService->getOperation($line);
-                $amount      = $this->transactionService->getAmount($line);
-                $details     = $this->transactionService->extractDetails($line);
-                $transaction = $this->transactionService->createTransaction($date, $operation, $amount, $details);
-
-                if (isset($transaction)) {
-                    $transactions[] = $transaction->toArray();
-                }
-            }
-        }
-
-        $transactions = $this->transactionService->sort(
+        $sortedTransactions = $this->transactionService->sort(
             $transactions,
             $request->query('sortBy'),
             $request->query('sortOrder', 'desc')
         );
 
-        return response()->json($transactions);
+        return response()->json($sortedTransactions);
     }
 }

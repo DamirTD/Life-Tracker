@@ -15,4 +15,5 @@ interface TransactionServiceInterface
     public function createTransaction(?string $date, ?string $operation, ?string $amount, string $details): ?TransactionDTO;
 
     public function sort(array $transactions, ?string $sortBy, string $sortOrder = 'desc'): array;
+    public function processLine(string $line): ?array;
 }

@@ -9,7 +9,8 @@ class TransactionDTO
         public ?string $operation,
         public ?string $amount,
         public string $details
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

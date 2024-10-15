@@ -5,10 +5,10 @@
       <list>
         <option value="$PROJECT_DIR$/gateaway/tests/Unit" />
         <option value="$PROJECT_DIR$/gateaway/tests/Feature" />
-        <option value="$PROJECT_DIR$/finance/tests/Unit" />
-        <option value="$PROJECT_DIR$/finance/tests/Feature" />
         <option value="$PROJECT_DIR$/gateway/tests/Unit" />
         <option value="$PROJECT_DIR$/gateway/tests/Feature" />
+        <option value="$PROJECT_DIR$/finance/tests/Unit" />
+        <option value="$PROJECT_DIR$/finance/tests/Feature" />
       </list>
     </option>
   </component>

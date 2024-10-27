@@ -3,6 +3,7 @@
 namespace App\Http\Services\User;
 
 use App\Http\Common\Constants\DB\User\UserTableInterface;
+use App\Http\Handlers\LoginHandler;
 use App\Http\RepositoryInterfaces\User\UserRepositoryInterface;
 use App\Http\ServiceInterfaces\User\UserServiceInterface;
 use App\Models\User;
@@ -12,24 +13,17 @@ use Illuminate\Support\Facades\Hash;
 class UserService implements UserServiceInterface
 {
     public function __construct(
-        protected UserRepositoryInterface $userRepository
+        protected UserRepositoryInterface $userRepository,
+        protected LoginHandler $loginHandler
     ) {
     }
 
     /**
      * @throws AuthenticationException
      */
-    public function getByEmailAndPassword(string $email, string $password): mixed
+    public function getByEmailAndPassword(string $email, string $password): User|null
     {
-        $user = User::query()
-            ->where(UserTableInterface::COLUMN_EMAIL, $email)
-            ->first();
-
-        if (isset($user) && Hash::check($password, $user->password)) {
-            return $user;
-        }
-
-        throw new AuthenticationException('Invalid credentials');
+        return $this->loginHandler->handle($email, $password);
     }
 
     public function createUser(array $data): void

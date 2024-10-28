@@ -36,6 +36,32 @@ class TransactionController extends Controller
             $request->query('sortOrder', 'desc')
         );
 
-        return response()->json($sortedTransactions);
+        $totalSpent = 0;
+        $totalReceived = 0;
+        $dates = [];
+
+        foreach ($sortedTransactions as $transaction) {
+            $dates[] = $transaction['date'];
+
+            if (in_array($transaction['operation'], ['Перевод', 'Покупка'])) {
+                $totalSpent += (float)$transaction['amount'];
+            } elseif ($transaction['operation'] === 'Пополнение') {
+                $totalReceived += (float)$transaction['amount'];
+            }
+        }
+
+        $startDate = min($dates);
+        $endDate = max($dates);
+
+        $response = [
+            'summary' => [
+                'total_spent' => number_format($totalSpent, 2, '.', ''),
+                'total_received' => number_format($totalReceived, 2, '.', ''),
+                'period' => "{$startDate} - {$endDate}"
+            ],
+            'transactions' => array_values($sortedTransactions)
+        ];
+
+        return response()->json($response);
     }
 }

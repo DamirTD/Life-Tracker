@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Common\Constants\DB\User\UserTableInterface;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,29 +12,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+        Schema::create(UserTableInterface::TABLE_NAME, function (Blueprint $table) {
+            $table->id(UserTableInterface::COLUMN_ID);
+            $table->string(UserTableInterface::COLUMN_NAME);
+            $table->string(UserTableInterface::COLUMN_EMAIL)->unique();
+            $table->timestamp(UserTableInterface::COLUMN_EMAIL_VERIFIED_AT)->nullable();
+            $table->string(UserTableInterface::COLUMN_PASSWORD);
             $table->rememberToken();
             $table->timestamps();
         });
 
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
+        Schema::create(UserTableInterface::TABLE_PASSWORD_RESET_TOKENS, function (Blueprint $table) {
+            $table->string(UserTableInterface::COLUMN_EMAIL)->primary();
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamp(UserTableInterface::COLUMN_CREATED_AT)->nullable();
         });
 
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+        Schema::create(UserTableInterface::TABLE_SESSIONS, function (Blueprint $table) {
+            $table->string(UserTableInterface::COLUMN_ID)->primary();
+            $table->foreignId(UserTableInterface::COLUMN_USER_ID)->nullable()->index();
+            $table->string(UserTableInterface::COLUMN_IP_ADDRESS, 45)->nullable();
+            $table->text(UserTableInterface::COLUMN_USER_AGENT)->nullable();
+            $table->longText(UserTableInterface::COLUMN_PAYLOAD);
+            $table->integer(UserTableInterface::COLUMN_LAST_ACTIVITY)->index();
         });
     }
 
@@ -42,8 +43,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists(UserTableInterface::TABLE_NAME);
+        Schema::dropIfExists(UserTableInterface::TABLE_PASSWORD_RESET_TOKENS);
+        Schema::dropIfExists(UserTableInterface::TABLE_SESSIONS);
     }
 };

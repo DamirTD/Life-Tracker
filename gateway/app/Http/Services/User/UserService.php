@@ -18,14 +18,6 @@ class UserService implements UserServiceInterface
     ) {
     }
 
-    /**
-     * @throws AuthenticationException
-     */
-    public function getByEmailAndPassword(string $email, string $password): User|null
-    {
-        return $this->loginHandler->handle($email, $password);
-    }
-
     public function createUser(array $data): void
     {
         $user = new User([

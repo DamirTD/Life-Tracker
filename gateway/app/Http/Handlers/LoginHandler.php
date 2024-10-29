@@ -2,8 +2,6 @@
 
 namespace App\Http\Handlers;
 
-use App\Http\RepositoryInterfaces\User\UserRepositoryInterface;
-use App\Http\ServiceInterfaces\User\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Hash;

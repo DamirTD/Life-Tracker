@@ -4,7 +4,7 @@ namespace App\Http\Services;
 
 use App\Http\ServiceInterfaces\TransactionServiceInterface;
 use App\Http\Utils\Constants\TransactionConstants;
-use App\Http\Utils\Enums\OperationType;
+use App\Http\Utils\Enums\TransactionOperationType;
 use App\Http\Utils\DTO\TransactionDTO;
 use App\Http\Utils\Sort\TransactionSorter;
 
@@ -12,7 +12,7 @@ class TransactionService implements TransactionServiceInterface
 {
     public function getOperation(string $line): ?string
     {
-        foreach (OperationType::cases() as $operation) {
+        foreach (TransactionOperationType::cases() as $operation) {
             if (str_contains($line, $operation->value)) {
                 return $operation->value;
             }

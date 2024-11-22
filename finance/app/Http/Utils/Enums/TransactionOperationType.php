@@ -2,7 +2,7 @@
 
 namespace App\Http\Utils\Enums;
 
-enum OperationType: string
+enum TransactionOperationType: string
 {
     case Purchase      = 'Покупка';
     case Replenishment = 'Пополнение';

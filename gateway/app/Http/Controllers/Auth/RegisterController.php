@@ -17,7 +17,14 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         return $this->wrap($request, function ($validatedData) {
-            $this->userService->createUser($validatedData);
+            $user = $this->userService->createUser($validatedData);
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+            ]);
         });
     }
 }

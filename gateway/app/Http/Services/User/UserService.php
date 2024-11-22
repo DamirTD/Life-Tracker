@@ -7,8 +7,6 @@ use App\Http\Handlers\LoginHandler;
 use App\Http\RepositoryInterfaces\User\UserRepositoryInterface;
 use App\Http\ServiceInterfaces\User\UserServiceInterface;
 use App\Models\User;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
 {
@@ -18,7 +16,7 @@ class UserService implements UserServiceInterface
     ) {
     }
 
-    public function createUser(array $data): void
+    public function createUser(array $data): User
     {
         $user = new User([
             UserTableInterface::COLUMN_NAME     => $data['name'],
@@ -28,5 +26,7 @@ class UserService implements UserServiceInterface
         ]);
 
         $this->userRepository->save($user);
+
+        return $user;
     }
 }

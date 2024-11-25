@@ -11,7 +11,7 @@ class TransactionAnalyzerService implements TransactionAnalyzerServiceInterface
 
     public function __construct(
         protected TransactionAnalyzerHelper $transactionAnalyzerHelper
-    ){
+    ) {
     }
 
     public function analyze(array $transactions): array

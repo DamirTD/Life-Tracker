@@ -16,7 +16,7 @@ class TransactionAnalyzerHelper
     {
         $maxDetail = '';
         $maxAmount = 0;
-        $maxCount = 0;
+        $maxCount  = 0;
 
         foreach ($counts as $detail => $count) {
             if ($count > $maxCount) {

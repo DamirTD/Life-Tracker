@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Utils\ServiceHelper;
+namespace App\Http\Utils\Helper;
 
 use App\Http\ServiceInterfaces\TransactionServiceInterface;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Smalot\PdfParser\Parser;
 
-class TransactionHelperService
+class TransactionPDFHelper
 {
     /**
      * @throws Exception

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Common\Constants\DB\User\UserTableInterface;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(UserTableInterface::TABLE_NAME, function (Blueprint $table) {
-            $table->json(UserTableInterface::COLUMN_SERVICES)->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->json('services')->nullable();
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(UserTableInterface::TABLE_NAME, function (Blueprint $table) {
-            $table->dropColumn(UserTableInterface::COLUMN_SERVICES);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('services');
         });
     }
 };

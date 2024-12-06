@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\ServiceInterfaces\TransactionAnalyzerServiceInterface;
 use App\Http\ServiceInterfaces\TransactionServiceInterface;
+use App\Http\Services\TransactionAnalyzerService;
 use App\Http\Services\TransactionService;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(TransactionServiceInterface::class, TransactionService::class);
+        $this->app->bind(TransactionAnalyzerServiceInterface::class, TransactionAnalyzerService::class);
+
     }
 
     /**
